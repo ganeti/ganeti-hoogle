@@ -1,0 +1,2 @@
+#!/bin/sh
+chmod -v a+rx etc/cron.hourly/hoogle-update

@@ -1,0 +1,8 @@
+#!/bin/sh
+set -ex
+export DEBIAN_FRONTEND=noninteractive
+umask 0022
+
+apt-get install -y apache2-mpm-prefork
+
+apt-get install -y make cabal-install ghc

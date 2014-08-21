@@ -1,0 +1,2 @@
+#!/bin/sh
+make -C /srv/hoogle >/srv/hoogle/update.log 2>&1

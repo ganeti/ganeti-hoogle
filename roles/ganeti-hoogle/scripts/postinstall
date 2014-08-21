@@ -1,0 +1,47 @@
+#!/bin/sh
+set -ex
+export DEBIAN_FRONTEND=noninteractive
+umask 0022
+
+# slack doesn't seem to define $HOME
+if [ -z "$HOME" ]; then
+  export HOME=/root # yes, hardcoded
+fi
+
+
+echo $HOME
+vdir $HOME
+
+apt-get update
+apt-get install -y \
+      libghc-network-dev \
+      libghc-test-framework-dev \
+      libghc-test-framework-hunit-dev \
+      libghc-test-framework-quickcheck2-dev \
+      libghc-json-dev libghc-curl-dev libghc-hinotify-dev \
+      libghc-parallel-dev libghc-utf8-string-dev \
+      libghc-hslogger-dev libghc-crypto-dev \
+      libghc-regex-pcre-dev libghc-attoparsec-dev \
+      libghc-vector-dev libghc-temporary-dev \
+      libghc-snap-server-dev libpcre3-dev \
+      happy zlib1g-dev
+
+# Update cabal, unless we have done so in the last 3 days
+if [ ! -f $HOME/.cabal/packages/hackage.haskell.org/00-index.tar -o -n "$(find $HOME/.cabal -path $HOME/.cabal/packages/hackage.haskell.org/00-index.tar -mtime +2)" ]; then
+  cabal update
+fi
+cabal install --global base64-bytestring
+if [ ! -x "/usr/local/bin/cabal" ] ; then
+	cabal install --global cabal-install-1.18.0.2
+fi
+
+# Apache
+a2enmod cgi
+a2enmod alias
+a2enmod mime
+
+a2dissite default
+a2ensite hoogle
+/etc/init.d/apache2 force-reload
+
+make -C /srv/hoogle

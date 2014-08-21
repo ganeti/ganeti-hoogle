@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+    <Directory /srv/hoogle/web/datadir>
+        Options FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    </Directory>
+
+    Alias /hoogle/res/ /srv/hoogle/web/datadir/resources/
+    # The hoogle database:
+    Alias /hoogle/ganeti-all.hoo /srv/hoogle/web/datadir/databases/default.hoo
+    AddType application/x-hoogle-database .hoo
+
+    # CGI
+    ScriptAlias /hoogle/ /srv/hoogle/web/hoogle
+
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    #LogLevel warn
+
+    #CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
