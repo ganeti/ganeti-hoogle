@@ -25,6 +25,8 @@ process-1.1.0.1
 random-1.0.1.1
 regex-base-0.93.2
 regex-pcre-0.94.2
+snap-core-0.9.6.3
+snap-server-0.9.4.5
 syb-0.3.6.1
 template-haskell-2.7.0.0
 text-0.11.2.0
