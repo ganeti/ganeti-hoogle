@@ -40,7 +40,7 @@ a2enmod cgi
 a2enmod alias
 a2enmod mime
 
-a2dissite default
+a2dissite 000-default
 a2ensite hoogle
 /etc/init.d/apache2 force-reload
 
